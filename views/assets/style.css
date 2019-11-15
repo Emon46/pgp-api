@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Oswald:400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600');
+
+
+a {
+    text-decoration: none;
+}
+body {
+	margin: 0;
+    background-color: #ccc;
+}
+.main-wrapper {
+    margin:0px auto ;
+    width:1000px;
+}
+header {
+	background-color: black;
+    padding: 8px,0px,6px,10px;
+    margin-bottom: 0px;
+}
+header nav {
+    width: 100%;
+    height:60px;
+    background-color: black;
+}
+header h1 {
+	display: inline;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 400;
+	font-size: 32px;
+	float: left;
+	margin-top: 5px;
+	margin-right: 12px;
+	padding-left: 10px;
+	color: red;
+	text-shadow: 2px 2px 4px #ccc;
+}
+
+header nav ul {
+	display: inline;
+	padding-left: 15px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+    float: left;
+}
+header nav ul li {
+	display: inline-block;
+    float: left;
+    list-style: none;
+    padding-right: 8px;
+
+}
+header nav ul li a {
+	font-size: 22px;
+    float: left;
+    list-style: none;
+    padding-right: 10px;
+	font-family: 'Montserrat', sans-serif;
+	color: #ccc;
+	font-weight: 500;
+
+}
+
+header .nav-login {
+    float: right;
+}
+header .nav-login  form {
+    float: left;
+    padding-top: 15px;
+}
+header .nav-login  form input {
+    float: left;
+    width: 140px;
+    height: 30px;
+    padding: 0px 10px;
+    margin-right: 5px;
+    border: none;
+    background-color: #ccc;
+
+}
+header .nav-login  form  button {
+    float: left;
+    width: 60px;
+    height: 25px;
+    margin-right: 10px;
+    margin-top: 2px;
+    padding-top: 2px;
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 600;
+
+}
+header .nav-login a {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+    float: left;
+    color: #111;
+    padding-top: 3px;
+    line-height: 50px;
+    font-size: 16px;
+    color: white;
+	font-family: 'Raleway', sans-serif;
+}
