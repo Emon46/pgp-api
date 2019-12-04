@@ -1,22 +1,39 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var sendingEthereum = require('./sending.js');
+const express = require('express');
+const app = express();
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
-var app = express();
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-app.set('view engine','ejs');
-app.use('/assets',express.static('assets'))
-
-app.post('/send_ether', urlencodedParser, function (req, res) {
-    console.log(req.body);
-    res.send(sendingEthereum(req.body.to_address,req.body.amount));
-
+const trust_value = require('./trust_value_api.js');
+const user_certificate_create = require('./create_certificate_api.js');
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use((req, res, next)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  if(res.method === 'OPTIONS')
+  {
+    res.header("Access-Control-Allow-Methods",'PUT, PATCH, POST, DELETE, GET');
+    return res.status(200).json({});
+  }
+  next();
 })
 
-app.get('/',function(req,res){
-  res.render('send_ether'  );
+app.use('/certificate',user_certificate_create);
+app.use('/trust-value',trust_value);
+
+app.use((req,res,next)=>{
+  const error = new Error('Not found');
+  error.status = 404;
+  next(error);
+})
+
+app.use((error, req, res, next)=>{
+  res.status(error.status || 500);
+  res.json({
+    error : {
+      message : error.message
+    }
+  });
 });
-
-
-app.listen(3000);
+module.exports = app;
