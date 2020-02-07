@@ -18,11 +18,11 @@ contract Certificate {
     }
 
     mapping(address => UserCertificate) UserCertificates;
-    
+
     function calculateTrustValue(uint send, uint returned)
     public
     returns(uint trust){
-        
+
         trust = (returned*10)/send;
         if(trust>10) trust = 10;
         return trust;
@@ -37,10 +37,10 @@ contract Certificate {
                               string memory signature)
     public
     returns(bool success){
-        
+
           bool certficateExist = isCertificateExist(userAddress);
           if(certficateExist == true )return false;
-          
+
           UserCertificates[userAddress].userMail          = userMail;
           UserCertificates[userAddress].userDomain        = userDomain;
           UserCertificates[userAddress].periodOfValidity  = periodOfValidity;
@@ -67,7 +67,7 @@ contract Certificate {
              string memory periodOfValidity,
              string memory signature,
              string memory version) {
-             
+
 
                     return(
                             UserCertificates[userAddress].userDomain,
@@ -118,8 +118,9 @@ contract Certificate {
     mapping(address => CertifyBy[]) certifyBypeoples;
 
     function requestCertificationTo(address certifyForAddress, address byAddress, uint amountGiven)
-    public
+    public payable
     returns(bool success){
+        payMethod(certifyForAddress,amountGiven);
         CertifyBy memory singleCertifier;
         singleCertifier.certifyByAddress =byAddress;
         singleCertifier.receiveAmount = amountGiven;
@@ -130,27 +131,34 @@ contract Certificate {
     }
 
     function backEtherForCertification(address certifyForAdd, address byAdd, uint amountGivenBack)
-    public
+    public payable
     returns(bool success){
 
         for (uint i = 0; i < certifyBypeoples[certifyForAdd].length; i++) {
 
             if(certifyBypeoples[certifyForAdd][i].certifyByAddress == byAdd){
+                payMethod(byAdd,amountGivenBack);
                 certifyBypeoples[certifyForAdd][i].returnedAmount = amountGivenBack;
-                
+
                 uint send = certifyBypeoples[certifyForAdd][i].receiveAmount;
                 uint returned = certifyBypeoples[certifyForAdd][i].returnedAmount;
                 uint newTrusValue = calculateTrustValue(send,returned);
                 bool succ = updateTrustValue(certifyForAdd,newTrusValue);
                 return succ;
-                
-            
+
+
             }
         }
-        
+
         return false;
 
 
+    }
+
+        function payMethod(address rec,uint amount) public payable {
+
+        address payable receiver = address(uint160(rec));
+        receiver.transfer(amount);
     }
 
 

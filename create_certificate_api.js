@@ -6,10 +6,225 @@ const Web3= require('web3');
 const url='https://ropsten.infura.io/v3/88adcf4f4a60430eb9cd886f9b732d85'
 const web3 =new Web3(url);
 
-const contractAbi =
-[{"constant":false,"inputs":[{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"aTrustValue","type":"uint256"}],"name":"updateTrustValue","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"userAddress","type":"address"}],"name":"getUserCertificate","outputs":[{"internalType":"string","name":"userDomain","type":"string"},{"internalType":"string","name":"userMail","type":"string"},{"internalType":"uint256","name":"trustValue","type":"uint256"},{"internalType":"uint256","name":"totalCertified","type":"uint256"},{"internalType":"string","name":"periodOfValidity","type":"string"},{"internalType":"string","name":"signature","type":"string"},{"internalType":"string","name":"version","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"certifyForAdd","type":"address"},{"internalType":"address","name":"byAdd","type":"address"},{"internalType":"uint256","name":"amountGivenBack","type":"uint256"}],"name":"backEtherForCertification","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"send","type":"uint256"},{"internalType":"uint256","name":"returned","type":"uint256"}],"name":"calculateTrustValue","outputs":[{"internalType":"uint256","name":"trust","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"userAddress","type":"address"}],"name":"isCertificateExist","outputs":[{"internalType":"bool","name":"isCertificateValid","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"certifyForAddress","type":"address"},{"internalType":"address","name":"byAddress","type":"address"},{"internalType":"uint256","name":"amountGiven","type":"uint256"}],"name":"requestCertificationTo","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"string","name":"userDomain","type":"string"},{"internalType":"string","name":"userMail","type":"string"},{"internalType":"string","name":"periodOfValidity","type":"string"},{"internalType":"string","name":"signature","type":"string"}],"name":"newCertificate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+const contractAbi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"name": "aTrustValue",
+				"type": "uint256"
+			}
+		],
+		"name": "updateTrustValue",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "getUserCertificate",
+		"outputs": [
+			{
+				"name": "userDomain",
+				"type": "string"
+			},
+			{
+				"name": "userMail",
+				"type": "string"
+			},
+			{
+				"name": "trustValue",
+				"type": "uint256"
+			},
+			{
+				"name": "totalCertified",
+				"type": "uint256"
+			},
+			{
+				"name": "periodOfValidity",
+				"type": "string"
+			},
+			{
+				"name": "signature",
+				"type": "string"
+			},
+			{
+				"name": "version",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "certifyForAdd",
+				"type": "address"
+			},
+			{
+				"name": "byAdd",
+				"type": "address"
+			},
+			{
+				"name": "amountGivenBack",
+				"type": "uint256"
+			}
+		],
+		"name": "backEtherForCertification",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "send",
+				"type": "uint256"
+			},
+			{
+				"name": "returned",
+				"type": "uint256"
+			}
+		],
+		"name": "calculateTrustValue",
+		"outputs": [
+			{
+				"name": "trust",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "rec",
+				"type": "address"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "payMethod",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "isCertificateExist",
+		"outputs": [
+			{
+				"name": "isCertificateValid",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "certifyForAddress",
+				"type": "address"
+			},
+			{
+				"name": "byAddress",
+				"type": "address"
+			},
+			{
+				"name": "amountGiven",
+				"type": "uint256"
+			}
+		],
+		"name": "requestCertificationTo",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"name": "userDomain",
+				"type": "string"
+			},
+			{
+				"name": "userMail",
+				"type": "string"
+			},
+			{
+				"name": "periodOfValidity",
+				"type": "string"
+			},
+			{
+				"name": "signature",
+				"type": "string"
+			}
+		],
+		"name": "newCertificate",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];
 
-const contractAddress = '0xa105a7885b64df6fa6824864a0fc50c4392cef18';
+const contractAddress = '0xcb22C0a0e7bC7BA821F241AFe89f463a87042CFC';
 
 var certificateContract = new web3.eth.Contract(contractAbi , contractAddress );
 
@@ -57,7 +272,8 @@ router.post('/', (req, res, next)=> {
                               const response = {
                                   success : true,
                                   error: null,
-                                  data: hash
+                                  data: data,
+                                  hash: hash
                                 }
                                 console.log(hash);
                                 res.status(201).json(response);
